@@ -1,0 +1,32 @@
+/*To create a user for connecting to the project*/
+
+SQL> alter session set "_oracle_script"=true;
+
+Session altered.
+
+SQL> create user hostel_management_system identified by oracle;
+
+User created.
+
+SQL> grant connect, resource, dba to hostel_management_system;
+
+Grant succeeded.
+
+SQL> grant unlimited tablespace to hostel_management_system;
+
+Grant succeeded.
+
+SQL> grant all privileges to hostel_management_system;
+
+Grant succeeded.
+
+
+
+
+Oracle query command to check the SID (or instance name):
+
+select sys_context('userenv','instance_name') from dual; 
+
+Oracle query command to check database name (or server host):
+
+select sys_context('userenv', 'server_host') from dual;
