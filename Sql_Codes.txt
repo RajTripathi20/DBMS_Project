@@ -30,3 +30,180 @@ select sys_context('userenv','instance_name') from dual;
 Oracle query command to check database name (or server host):
 
 select sys_context('userenv', 'server_host') from dual;
+
+create table STUDENT
+(
+	"Student_ID" int generated as identity
+		constraint STUDENT_PK
+			primary key,
+	"First_Name" varchar(20) not null,
+	"Last_Name" varchar(20) not null,
+	"Hostel_ID" int not null,
+	"Room_Number" int not null,
+	DOB date not null,
+	"Age" int CHECK("Age">0) not null,
+	"Gender" varchar(10) CHECK("Gender"='M' or "Gender" ='F' or "Gender"='O') not null,
+	"Address" varchar(255) not null,
+	"Emergency_Contact" varchar(15) CHECK("Emergency_Contact" LIKE '+91[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') not null,
+	"Fees" int not null
+)
+/
+
+create table ROOM
+(
+    "Room_Number" int,
+    "Hostel_ID"   int
+        constraint ROOM_HOSTEL_HOSTEL_ID_FK
+            references HOSTEL,
+    "Status"      VARCHAR(50) CHECK ("Status" = 'Occupied' or "Status" = 'Not Occupied') not null,
+    "Floor"       int                                                                    not null,
+    "Student_ID"  int
+        constraint ROOM_STUDENT_STUDENT_ID_FK
+            references STUDENT,
+    constraint ROOM_PK
+        unique ("Room_Number", "Hostel_ID")
+)
+/
+
+
+
+create table HOSTEL
+(
+	"Hostel_ID" int generated as identity
+		constraint HOSTEL_PK
+			primary key,
+	"Name" varchar(20) not null,
+	"Number_of_Rooms" int CHECK("Number_of_Rooms">0) not null,
+	"Gender" varchar(10) CHECK("Gender"='M' or "Gender" ='F' or "Gender"='O') not null,
+	"Location" varchar(50) not null,
+	"Annual_Expense" int not null,
+	"Number_of_Workers" int CHECK("Number_of_Workers">0) not null,
+	"Floors" int CHECK("Floors">0) not null
+)
+
+create table HOSTELSTAFF
+(
+    "Employee_ID" int generated as identity
+        constraint HOSTELSTAFF_PK
+            primary key,
+    "First_Name"  varchar(20)                                                            not null,
+    "Last_Name"   varchar(20)                                                            not null,
+    "Gender"      varchar(10) CHECK ("Gender" = 'M' or "Gender" = 'F' or "Gender" = 'O') not null,
+    "Hostel_ID"   int                                                                    not null,
+    "Age"         int CHECK ("Age" > 0)                                                  not null,
+    "Work"        varchar(100)                                                           not null
+)
+/
+
+create table STDPHONENO
+(
+    "Student_ID"   int,
+    "Phone_Number" varchar(15) CHECK ("Phone_Number" LIKE '+91[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+    constraint STDPHONENO_PK
+        primary key ("Student_ID", "Phone_Number")
+)
+/
+
+create table HSTAFFPHONENO
+(
+    "Employee_ID"  int,
+    "Phone_Number" varchar(15) CHECK ("Phone_Number" LIKE '+91[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+    constraint HSTAFFPHONENO_PK
+        primary key ("Employee_ID", "Phone_Number")
+)
+/
+
+
+create table HSTAFFSAL
+(
+    "Work"   varchar(100)
+        constraint HSTAFFSAL_PK
+            primary key,
+    "Salary" int CHECK ("Salary" > 0) not null
+)
+/
+
+create table STUDENTACTIVITY
+(
+    "Student_ID" int,
+    "Check_Out"  timestamp not null,
+    "Check_In"   timestamp not null,
+    constraint STUDENTACTIVITY_PK
+        primary key ("Student_ID", "Check_Out")
+)
+/
+
+alter table ROOM
+    add constraint ROOM_HOSTEL_HOSTEL_ID_FK
+        foreign key ("Hostel_ID") references HOSTEL
+/
+
+alter table ROOM
+    add constraint ROOM_STUDENT_STUDENT_ID_FK
+        foreign key ("Student_ID") references STUDENT
+/
+
+alter table STDPHONENO
+    add constraint STDPHONENO_STUDENT_STUDENT_ID_FK
+        foreign key ("Student_ID") references STUDENT
+/
+
+alter table STUDENT
+    add constraint STUDENT_ROOM_ROOM_NUMBER_HOSTEL_ID_FK
+        foreign key ("Room_Number", "Hostel_ID") references ROOM
+/
+
+
+alter table HOSTELSTAFF
+    add constraint HOSTELSTAFF_HOSTEL_HOSTEL_ID_FK
+        foreign key ("Hostel_ID") references HOSTEL
+/
+
+alter table HOSTELSTAFF
+    add constraint HOSTELSTAFF_HSTAFFSAL_WORK_FK
+        foreign key ("Work") references HSTAFFSAL
+/
+
+alter table HSTAFFPHONENO
+    add constraint HSTAFFPHONENO_HOSTELSTAFF_EMPLOYEE_ID_FK
+        foreign key ("Employee_ID") references HOSTELSTAFF
+/
+
+alter table STUDENTACTIVITY
+    add constraint STUDENTACTIVITY_STUDENT_STUDENT_ID_FK
+        foreign key ("Student_ID") references STUDENT
+/
+
+INSERT INTO HOSTEL VALUES (DEFAULT,'Shankar Bhavan',10,'M','BITS Pilani Hyderabad Campus',0,1,2);
+INSERT INTO HOSTEL VALUES (DEFAULT,'Valmiki Bhavan',10,'F','BITS Pilani Hyderabad Campus',0,1,2);
+
+INSERT INTO ROOM VALUES (1,7,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (2,7,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (3,7,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (4,7,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (5,7,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (6,7,'Not Occupied',2,NULL);
+INSERT INTO ROOM VALUES (7,7,'Not Occupied',2,NULL);
+INSERT INTO ROOM VALUES (8,7,'Not Occupied',2,NULL);
+INSERT INTO ROOM VALUES (9,7,'Not Occupied',2,NULL);
+INSERT INTO ROOM VALUES (10,7,'Not Occupied',2,NULL);
+
+INSERT INTO ROOM VALUES (1,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (2,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (3,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (4,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (5,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (6,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (7,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (8,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (9,8,'Not Occupied',1,NULL);
+INSERT INTO ROOM VALUES (10,8,'Not Occupied',1,NULL);
+
+INSERT INTO HSTAFFSAL VALUES('Hostel Warden', 100000);
+INSERT INTO HSTAFFSAL VALUES('Gardener' , 30000);
+INSERT INTO HSTAFFSAL VALUES('Cleaner' , 40000);
+INSERT INTO HSTAFFSAL VALUES('Chowkidar' , 60000);
+INSERT INTO HSTAFFSAL VALUES('Assistant Warden' , 80000);
+INSERT INTO HSTAFFSAL VALUES('Miscellaneous' , 40000);
+INSERT INTO HSTAFFSAL VALUES('Plumber' , 20000);
+
