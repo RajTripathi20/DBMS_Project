@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,16 +15,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hostel_management_system.ModifyStudentController">
    <top>
       <MenuBar nodeOrientation="RIGHT_TO_LEFT" style="-fx-background-color: #adefd1;" BorderPane.alignment="CENTER_LEFT">
-        <menus>
-            <Menu mnemonicParsing="false" text="Log Out" />
-            <Menu mnemonicParsing="false" text="Room" />
-          <Menu mnemonicParsing="false" text="Hostel Staff" />
-          <Menu mnemonicParsing="false" text="Students" />
-          <Menu mnemonicParsing="false" style="-fx-background-color: #84dfb4;" text="Home" />
-        </menus>
+         <menus>
+            <Menu mnemonicParsing="false" text="Navigate">
+               <items>
+                  <MenuItem fx:id="homeMenu" mnemonicParsing="false" onAction="#OpenHome" text="Home" />
+                  <MenuItem fx:id="studentMenu" mnemonicParsing="false" onAction="#OpenStudent" text="Students" />
+                  <MenuItem fx:id="hostelStaffMenu" mnemonicParsing="false" onAction="#OpenHostelStaff" text="Hostel Staff" />
+                  <MenuItem fx:id="roomMenu" mnemonicParsing="false" onAction="#OpenRoom" text="Room" />
+                  <MenuItem fx:id="activityLogMenu" mnemonicParsing="false" onAction="#OpenActivityLog" text="Activity Log" />
+                  <MenuItem fx:id="logOutMenu" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+               </items></Menu>
+         </menus>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -49,8 +54,8 @@
    <left>
       <AnchorPane prefHeight="742.0" prefWidth="748.0" style="-fx-background-color: #496075;" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="303.0" layoutY="240.0" promptText="Last Name" />
-            <TextField layoutX="303.0" layoutY="201.0" promptText="First Name" />
+            <TextField fx:id="last_name_textfield" layoutX="303.0" layoutY="240.0" promptText="Last Name" />
+            <TextField fx:id="first_name_textfield" layoutX="303.0" layoutY="201.0" promptText="First Name" />
             <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="#adefd1" layoutX="355.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Student Information" textAlignment="RIGHT" textOrigin="CENTER" wrappingWidth="401.9728240966797">
                <font>
                   <Font size="24.0" />
@@ -66,66 +71,66 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="278.0" promptText="dd/mm/yyyy" />
+            <TextField fx:id="dob_textfield" layoutX="303.0" layoutY="278.0" promptText="dd/mm/yyyy" />
             <Label layoutX="115.0" layoutY="275.0" prefHeight="30.0" prefWidth="105.0" text="Date Of Birth" textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="316.0" promptText="City, State" />
+            <TextField fx:id="address_textfield" layoutX="303.0" layoutY="316.0" promptText="City, State" />
             <Label layoutX="115.0" layoutY="313.0" prefHeight="30.0" prefWidth="105.0" text="Address" textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="354.0" promptText="M/F/O" />
+            <TextField fx:id="gender_textfield" layoutX="303.0" layoutY="354.0" promptText="M/F/O" />
             <Label layoutX="115.0" layoutY="351.0" prefHeight="30.0" prefWidth="105.0" text="Gender" textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="391.0" promptText="Primary Phone No." />
+            <TextField fx:id="phone_number_primary_textfield" layoutX="303.0" layoutY="391.0" promptText="Primary Phone No." />
             <Label layoutX="115.0" layoutY="388.0" prefHeight="30.0" prefWidth="105.0" text="Phone No." textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="427.0" promptText="Additional Phone No." />
+            <TextField fx:id="phone_number_secondary_textfield" layoutX="303.0" layoutY="427.0" promptText="Additional Phone No." />
             <Label layoutX="115.0" layoutY="424.0" prefHeight="30.0" prefWidth="105.0" text="Phone No." textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="463.0" promptText="Emergency Phone No." />
+            <TextField fx:id="emergency_contact_textfield" layoutX="303.0" layoutY="463.0" promptText="Emergency Phone No." />
             <Label layoutX="115.0" layoutY="460.0" prefHeight="30.0" prefWidth="180.0" text="Emergency Phone No." textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="500.0" promptText="Hostel ID" />
+            <TextField fx:id="hostel_ID_textfield" layoutX="303.0" layoutY="500.0" promptText="Hostel ID" />
             <Label layoutX="115.0" layoutY="497.0" prefHeight="30.0" prefWidth="180.0" text="Hostel ID" textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="303.0" layoutY="536.0" promptText="Room No." />
+            <TextField fx:id="room_number_textfield" layoutX="303.0" layoutY="536.0" promptText="Room No." />
             <Label layoutX="115.0" layoutY="533.0" prefHeight="30.0" prefWidth="180.0" text="Room No." textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="112.0" layoutY="594.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="342.0" style="-fx-background-color: adefd1;" text="Edit Student" textFill="#496075">
+            <Button fx:id="editStudentButton" layoutX="112.0" layoutY="594.0" mnemonicParsing="false" onAction="#EditStudent" prefHeight="34.0" prefWidth="342.0" style="-fx-background-color: adefd1;" text="Edit Student" textFill="#496075">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <TextField layoutX="302.0" layoutY="164.0" promptText="Student ID" />
+            <TextField fx:id="student_ID_textfield" layoutX="302.0" layoutY="164.0" promptText="Student ID" />
             <Label layoutX="114.0" layoutY="161.0" text="Student ID" textFill="#adefd1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="112.0" layoutY="647.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="342.0" style="-fx-background-color: adefd1;" text="Delete Student" textFill="#496075">
+            <Button fx:id="deleteStudentButton" layoutX="112.0" layoutY="647.0" mnemonicParsing="false" onAction="#DeleteStudent" prefHeight="34.0" prefWidth="342.0" style="-fx-background-color: adefd1;" text="Delete Student" textFill="#496075">
                <font>
                   <Font size="18.0" />
                </font>
