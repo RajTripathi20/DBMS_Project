@@ -48,7 +48,8 @@ create table STUDENT
 	"Fees" int not null
 )
 /
-
+searchButton
+searchByRoomID
 create table ROOM
 (
     "Room_Number" int,
@@ -207,3 +208,4 @@ INSERT INTO HSTAFFSAL VALUES('Assistant Warden' , 80000);
 INSERT INTO HSTAFFSAL VALUES('Miscellaneous' , 40000);
 INSERT INTO HSTAFFSAL VALUES('Plumber' , 20000);
 
+_textfield

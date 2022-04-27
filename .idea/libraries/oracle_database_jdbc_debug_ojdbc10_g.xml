@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="oracle.database.jdbc.debug.ojdbc10_g" type="repository">
+    <properties maven-id="com.oracle.database.jdbc.debug:ojdbc10_g:19.13.0.0.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ojdbc10_g-19.13.0.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/ojdbc10_g-19.13.0.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/ojdbc10_g-19.13.0.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

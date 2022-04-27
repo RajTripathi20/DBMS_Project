@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="oracle.database.jdbc.debug.ojdbc10_g" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:18" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:18" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:18" level="project" />
@@ -25,6 +26,13 @@
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:11.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.dlsc.formsfx:formsfx-core:11.5.0" level="project" />
     <orderEntry type="library" name="Maven: net.synedra:validatorfx:0.3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.jdbc:ojdbc6:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.jdbc:ucp:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.security:oraclepki:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.security:osdt_cert:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.security:osdt_core:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.ha:simplefan:11.2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.database.ha:ons:11.2.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-javafx:12.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.ikonli:ikonli-core:12.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" level="project" />
