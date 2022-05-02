@@ -217,7 +217,7 @@ public class AddRoomController implements Initializable {
 
         } catch (SQLException ex) {
             System.out.println("Connection Failed! Check output console" + ex.getMessage());
-            error_msg.setText("Constraints Violated");
+            error_msg.setText(ex.getMessage());
             return;
             //JOptionPane.showMessageDialog(null, "Connection Error",  "Error", JOptionPane.WARNING_MESSAGE);
         } catch (ClassNotFoundException e) {

@@ -1,5 +1,6 @@
 package com.example.hostel_management_system;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddActivityController implements Initializable {
@@ -169,6 +174,54 @@ public class AddActivityController implements Initializable {
 
     @FXML
     void addNewActivity(ActionEvent event) {
+
+        Integer student_ID = Integer.parseInt(this.student_ID_textfield.getText().toString());
+        String check_in = this.check_In_Time_textfield.getText().toString();
+        String check_out = this.check_Out_Time_textfield.getText().toString();
+
+
+        ObservableList<StudentActivity> data;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        try
+        {
+            Connection conn = DbConnection.dbConnect();
+            String sql3 = "SELECT * FROM STUDENT WHERE \"Student_ID\" = "+ student_ID ;
+            preparedStatement = (PreparedStatement) conn.prepareStatement(sql3);
+            ResultSet checkIDSet = preparedStatement.executeQuery();
+
+            //resultSet.next();
+            if(checkIDSet.next()) {
+                String sql = "INSERT INTO STUDENTACTIVITY VALUES (" + student_ID + ",TIMESTAMP \'" + check_out + "\'" +",TIMESTAMP \'" + check_in + "\')";
+                preparedStatement = (PreparedStatement) conn.prepareStatement(sql);
+                preparedStatement.executeQuery();
+
+
+                Stage stage = (Stage)this.addActivityButton.getScene().getWindow();
+                Stage newStage = new Stage();
+                Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("ActivityLogPage.fxml"));
+                newStage.setTitle("Activity Log Page");
+                newStage.setScene(new Scene(root, 800.0, 600.0));
+                newStage.setMaximized(true);
+                stage.close();
+                newStage.show();
+
+            }
+            else  {
+                error_msg.setText("The given Student ID was not found in the Database! Try Again");
+            }
+        }
+        catch(SQLException var20)
+        {
+            System.out.println("Connection Failed! Check output console" + var20.getMessage());
+            error_msg.setText(var20.getMessage());
+            return;
+        }
+        catch (ClassNotFoundException var21) {
+            var21.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

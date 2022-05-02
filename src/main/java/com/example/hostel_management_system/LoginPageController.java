@@ -51,6 +51,7 @@ public class LoginPageController {
             newStage.show();
 
 
+
         }
         else  {
             loginMessageLabel.setText("Invalid Credentials! Try Again");
