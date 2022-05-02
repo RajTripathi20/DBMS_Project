@@ -1,5 +1,7 @@
 package com.example.hostel_management_system;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 public class ActivityLogController implements Initializable {
@@ -117,7 +126,7 @@ public class ActivityLogController implements Initializable {
     }
 
     @FXML
-    private TableColumn<?, ?> Check_Out_TIme;
+    private TableColumn<StudentActivity, String> check_Out_Time;
 
     @FXML
     private TableColumn<?, ?> activity;
@@ -126,26 +135,45 @@ public class ActivityLogController implements Initializable {
     private Button addActivityButton;
 
     @FXML
-    private TableColumn<?, ?> check_In_Time;
+    private TableColumn<StudentActivity, String> check_In_Time;
 
     @FXML
     private TextField filterField;
 
     @FXML
-    private TableColumn<?, ?> first_name;
+    private TableColumn<StudentActivity, String> first_name;
 
     @FXML
-    private TableView<?> roomView;
+    private TableView<StudentActivity> studentActivityView;
 
     @FXML
-    private TableColumn<?, ?> room_number;
+    private TableColumn<StudentActivity, Integer> student_ID;
 
     @FXML
     private Button searchButton;
 
 
     @FXML
-    void searchByRoomID(ActionEvent event) {
+    void searchByStudentID(ActionEvent event) {
+        String search = this.filterField.getText().toString();
+
+        try {
+            String sql = "SELECT * FROM STUDENTACTIVITY WHERE \"Student_ID\"= " + Integer.parseInt(search);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            this.data = FXCollections.observableArrayList();
+
+            while (resultSet.next()) {
+                StudentActivity studentActivityInstance = new StudentActivity(resultSet.getInt("Student_ID"), resultSet.getString("Check_Out"), resultSet.getString("Check_In"));
+                this.data.add(studentActivityInstance);
+            }
+        } catch (SQLException var6) {
+            System.out.println("Connection Failed! Check output console" + var6.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.studentActivityView.setItems(this.data);
 
     }
 
@@ -164,8 +192,53 @@ public class ActivityLogController implements Initializable {
         room.show();
     }
 
+
+    private static Connection conn;
+
+
+    private ObservableList<StudentActivity> data;
+
+    static {
+        try {
+            conn = DbConnection.dbConnect();
+        } catch (SQLException var1) {
+            throw new RuntimeException(var1);
+        } catch (ClassNotFoundException var2) {
+            throw new RuntimeException(var2);
+        }
+    }
+
+    private void populateStudentActivities() {
+        try {
+            String sql = "SELECT * FROM STUDENTACTIVITY";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            this.data = FXCollections.observableArrayList();
+
+            while(resultSet.next()) {
+                StudentActivity studentActivityInstance = new StudentActivity(resultSet.getInt("Student_ID"), resultSet.getString("Check_Out"), resultSet.getString("Check_In"));
+                this.data.add(studentActivityInstance);
+            }
+        } catch (SQLException var5) {
+            System.out.println("Connection Failed! Check output console" + var5.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.populateStudentActivities();
+        this.student_ID.setCellValueFactory(new PropertyValueFactory<StudentActivity,Integer>("student_ID"));
+        this.check_In_Time.setCellValueFactory(new PropertyValueFactory<StudentActivity,String>("check_in"));
+        this.check_Out_Time.setCellValueFactory(new PropertyValueFactory<StudentActivity,String>("check_out"));
+
+        this.first_name.setCellValueFactory(new PropertyValueFactory<StudentActivity,String>("first_name"));
+
+        this.studentActivityView.setItems(this.data);
+
 
     }
 }

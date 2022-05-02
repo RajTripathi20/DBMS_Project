@@ -4,7 +4,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 public class HostelStaff {
 
@@ -117,5 +121,51 @@ public class HostelStaff {
     }
 
     public HostelStaff() throws SQLException, ClassNotFoundException {
+    }
+
+    public String getPhone_number() throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM HSTAFFPHONENO WHERE \"Employee_ID\" = "+this.getEmployee_ID();
+        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(sql);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        try {
+            return resultSet.getString("Phone_Number");
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public String getHostel_name() throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM HOSTEL WHERE \"Hostel_ID\" = "+this.getHostel_ID();
+        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(sql);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getString("Name");
+    }
+
+    public int getSalary() throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM HSTAFFSAL WHERE \"Work\" = "+"'"+this.getWork()+"'";
+        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(sql);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("Salary");
+    }
+
+
+    public HostelStaff(Integer employee_ID, String first_name, String last_name, String gender, Integer hostel_ID, Integer age, String work) throws ParseException, SQLException, ClassNotFoundException {
+        this.employee_ID = new SimpleIntegerProperty(employee_ID);
+        this.first_name = new SimpleStringProperty(first_name);
+        this.last_name = new SimpleStringProperty(last_name);
+        this.gender = new SimpleStringProperty(gender);
+        this.hostel_ID = new SimpleIntegerProperty(hostel_ID);
+        this.age = new SimpleIntegerProperty(age);
+        this.work = new SimpleStringProperty(work);
+
     }
 }

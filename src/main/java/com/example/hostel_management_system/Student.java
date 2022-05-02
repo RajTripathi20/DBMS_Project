@@ -22,7 +22,7 @@ public class Student {
     private SimpleStringProperty last_name;
     private SimpleIntegerProperty hostel_ID;
     private SimpleIntegerProperty room_number;
-    private Date dob;
+    private String dob;
     private SimpleIntegerProperty age;
     private SimpleStringProperty gender;
     private SimpleStringProperty address;
@@ -94,11 +94,11 @@ public class Student {
         this.room_number.set(room_number);
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -208,7 +208,7 @@ public class Student {
         this.last_name = new SimpleStringProperty(last_name);
         this.hostel_ID = new SimpleIntegerProperty(hostel_ID);
         this.room_number = new SimpleIntegerProperty(room_number);
-        this.dob = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dob);
+        this.dob = dob;
         this.age = new SimpleIntegerProperty(age);
         this.gender = new SimpleStringProperty(gender);
         this.address = new SimpleStringProperty(address);
